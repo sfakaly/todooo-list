@@ -2,6 +2,9 @@ package io.github.sfakaly.controller;
 
 import lombok.RequiredArgsConstructor;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Scanner;
 
 @RequiredArgsConstructor
@@ -10,13 +13,14 @@ public class UserInteraction {
     private final TaskController controller;
 
     public void run() {
+        printTimeUntilDeadline();
         printFullMenu();
 
         while (true) {
             String choice = readString("Введите номер команды");
 
             if (choice.equals("exit")) {
-                System.out.println("Завершение программы...");
+                System.out.print("\nЗавершение программы...");
                 System.exit(0);
             }
 
@@ -60,6 +64,31 @@ public class UserInteraction {
     }
 
     public void printFullMenu() {
+
+    }
+
+    // temporary method, потом организовать постановку дедлайна любой задачи загружаться первым
+    private void printTimeUntilDeadline() {
+        LocalDateTime deadline = LocalDateTime.of(2026, Month.JULY, 12, 0, 0); // for test
+        LocalDateTime now = LocalDateTime.now();
+        Duration diff = Duration.between(now, deadline);
+
+        if (diff.isZero() || diff.isNegative()) {
+            System.out.println("⌛️ Обратный отсчет был приостановлен...");
+            String output = String.format("Событие '%s' наступило!", "Летние каникулы"); // "Летние каникулы" for test
+            System.out.println(output + "\n");
+            return;
+        }
+
+        System.out.println("⏳ Обратный отсчет запущен...");
+        String output = String.format("До события '%s' осталось: %d дн. %02d:%02d:%02d",
+                "Летние каникулы", // for test
+                diff.toDaysPart(),
+                diff.toHoursPart(),
+                diff.toMinutesPart(),
+                diff.toSecondsPart());
+
+        System.out.println(output + "\n");
 
     }
 }
