@@ -11,7 +11,9 @@ package io.github.sfakaly.controller.commands;
 public interface Action {
     String getCode();
     String getAlias();
-    String getDescription();
+    String getLongDescription();
+    String getShortDescription();
 
-    public void execute();
+
+    public void execute(String args);
 }
