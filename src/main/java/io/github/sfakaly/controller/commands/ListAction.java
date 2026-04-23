@@ -1,8 +1,11 @@
 package io.github.sfakaly.controller.commands;
 
 import io.github.sfakaly.controller.UserInteraction;
+import io.github.sfakaly.model.Task;
 import io.github.sfakaly.service.TaskService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public class ListAction implements Action {
@@ -35,6 +38,23 @@ public class ListAction implements Action {
 
     @Override
     public void execute(String args) {
+        System.out.println("\n📂 TASKS");
+        List<Task> tasks = service.getAllTasks();
 
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            String prefix = (i == tasks.size() - 1) ? "└──" : "├──";
+            String isDonePrefix = task.isDone() ? "✅" : "⏳";
+
+            String taskInfo = String.format("%s [ID: %d] %s %s",
+                    prefix,
+                    task.getId(),
+                    isDonePrefix,
+                    task.getTitle());
+
+            System.out.println(taskInfo);
+        }
+
+        System.out.println();
     }
 }

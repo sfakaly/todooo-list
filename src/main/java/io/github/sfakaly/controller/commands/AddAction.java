@@ -53,6 +53,7 @@ public class AddAction implements Action {
                 break;
             }
         }
+
         LocalDateTime createdAt = LocalDateTime.now();
         boolean isDone = false; // при инициализации задача не может быть выполнена
         service.addTask(title, isDone, createdAt);

@@ -5,6 +5,7 @@ import io.github.sfakaly.model.Task;
 import io.github.sfakaly.repository.JsonHandler;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskService {
@@ -25,5 +26,9 @@ public class TaskService {
         Task task = new Task(lastId, title, isDone, createdAt);
         tasks.add(task);
         jsonHandler.saveStorage(new DataStorage(tasks, lastId));
+    }
+
+    public List<Task> getAllTasks() {
+        return new ArrayList<>(this.tasks);
     }
 }
