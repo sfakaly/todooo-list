@@ -31,4 +31,8 @@ public class TaskService {
     public List<Task> getAllTasks() {
         return new ArrayList<>(this.tasks);
     }
+
+    public void deleteTask(int id) {
+
+    }
 }
