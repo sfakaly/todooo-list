@@ -10,7 +10,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DataStorage {
     private final List<Task> tasks;
-    private final int lastId;
+    private int lastId;
 
     public DataStorage() {
         this.tasks = new ArrayList<>();

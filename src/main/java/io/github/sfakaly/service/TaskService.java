@@ -1,35 +1,24 @@
 package io.github.sfakaly.service;
 
-import io.github.sfakaly.model.DataStorage;
 import io.github.sfakaly.model.Task;
-import io.github.sfakaly.repository.JsonHandler;
+import io.github.sfakaly.repository.TaskRepository;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class TaskService {
-    private List<Task> tasks;
-    private int lastId;
-    private final JsonHandler jsonHandler;
-    private final DataStorage storage;
-
-    public TaskService(JsonHandler jsonHandler) {
-        this.jsonHandler = jsonHandler;
-        this.storage = jsonHandler.loadStorage();
-        this.tasks = storage.getTasks();
-        this.lastId = storage.getLastId();
-    }
+    private final TaskRepository repository;
 
     public void addTask(String title, boolean isDone, LocalDateTime createdAt) {
-        lastId++;
-        Task task = new Task(lastId, title, createdAt, isDone);
-        tasks.add(task);
-        jsonHandler.saveStorage(new DataStorage(tasks, lastId));
+        Task task = new Task(0, title, createdAt, isDone);
+        repository.saveTask(task);
     }
 
     public List<Task> getAllTasks() {
-        return new ArrayList<>(this.tasks);
+        return new ArrayList<>(repository.findAllTasks());
     }
 
     public void deleteTask(int id) {
