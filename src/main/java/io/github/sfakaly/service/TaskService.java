@@ -23,7 +23,7 @@ public class TaskService {
 
     public void addTask(String title, boolean isDone, LocalDateTime createdAt) {
         lastId++;
-        Task task = new Task(lastId, title, isDone, createdAt);
+        Task task = new Task(lastId, title, createdAt, isDone);
         tasks.add(task);
         jsonHandler.saveStorage(new DataStorage(tasks, lastId));
     }

@@ -38,8 +38,20 @@ public class ListAction implements Action {
 
     @Override
     public void execute(String args) {
-        System.out.println("\n📂 TASKS");
         List<Task> tasks = service.getAllTasks();
+        System.out.println();
+
+        if (tasks.isEmpty()) {
+            String output = """
+                    🏖️ Кажется, всё чисто!
+                       На данный момент у вас нет задач.
+                    """;
+
+            System.out.println(output);
+            return;
+        }
+
+        System.out.println("📂 TASKS");
 
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);

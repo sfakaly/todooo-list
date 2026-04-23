@@ -48,4 +48,4 @@ build/
 *.log
 
 ### Личные данные ###
-tasks.json
+db/json/tasks.json

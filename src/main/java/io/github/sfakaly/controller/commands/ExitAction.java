@@ -16,7 +16,7 @@ public class ExitAction implements Action {
         return """
                 Команда exit позволяет завершить работу программы.
                 Использование:
-                  exit — выход из программы.
+                  exit — выход из программы.\
                 """;
     }
 
