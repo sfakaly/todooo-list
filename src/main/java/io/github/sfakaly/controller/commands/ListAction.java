@@ -1,11 +1,13 @@
 package io.github.sfakaly.controller.commands;
 
+import io.github.sfakaly.controller.UserInteraction;
 import io.github.sfakaly.service.TaskService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ListAction implements Action {
     private final TaskService service;
+    private final UserInteraction ui;
 
     @Override
     public String getCode() {

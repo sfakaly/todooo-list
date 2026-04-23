@@ -6,7 +6,8 @@ package io.github.sfakaly.controller.commands;
  * UpdateAction - 3, update [id/title]
  * DeleteAction - 4, delete [id/title]
  * HelpAction - 5, help [command]
- * */
+ * ExitAction - 0, exit
+ */
 
 public interface Action {
     String getCode();

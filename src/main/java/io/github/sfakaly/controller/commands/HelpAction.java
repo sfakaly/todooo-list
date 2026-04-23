@@ -1,5 +1,6 @@
 package io.github.sfakaly.controller.commands;
 
+import io.github.sfakaly.controller.UserInteraction;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class HelpAction implements Action {
     private final Map<String, Action> commands;
+    private final UserInteraction ui;
 
     @Override
     public String getCode() {
@@ -52,7 +54,7 @@ public class HelpAction implements Action {
         try {
             System.out.println(specificCommand.getLongDescription() + "\n");
         } catch (NullPointerException npe) {
-            System.out.println("[!] Неизвестный аргумент! Введите 'help' для списка команд.");
+            ui.printError("\rНеизвестный аргумент! Введите 'help' для списка команд");
         }
     }
 }

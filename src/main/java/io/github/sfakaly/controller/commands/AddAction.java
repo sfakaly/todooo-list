@@ -1,11 +1,13 @@
 package io.github.sfakaly.controller.commands;
 
+import io.github.sfakaly.controller.UserInteraction;
 import io.github.sfakaly.service.TaskService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class AddAction implements Action {
     private final TaskService service;
+    private final UserInteraction ui;
 
     @Override
     public String getCode() {
@@ -36,6 +38,7 @@ public class AddAction implements Action {
     public void execute(String args) {
 
     }
+
 }
 
 

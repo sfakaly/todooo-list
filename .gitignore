@@ -46,3 +46,6 @@ build/
 
 ### Logs ###
 *.log
+
+### Личные данные ###
+tasks.json

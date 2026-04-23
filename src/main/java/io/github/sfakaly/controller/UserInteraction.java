@@ -1,6 +1,5 @@
 package io.github.sfakaly.controller;
 
-import io.github.sfakaly.controller.commands.HelpAction;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Duration;
@@ -11,21 +10,6 @@ import java.util.Scanner;
 @RequiredArgsConstructor
 public class UserInteraction {
     private final Scanner scanner = new Scanner(System.in);
-    private final TaskController controller;
-
-    public void run() {
-        printTimeUntilDeadline();
-
-        while (true) {
-            String choice = readString("Введите команду");
-
-            String[] parts = choice.split("\\s+", 2);
-            String command = parts[0];
-            String args = parts.length > 1 ? parts[1] : "";
-
-            controller.handleCommand(command, args);
-        }
-    }
 
     public String readString(String prompt) {
         System.out.print("> " + prompt + ": ");
@@ -59,11 +43,11 @@ public class UserInteraction {
     }
 
     public void printError(String prompt) {
-        System.out.println("\n[!] " + prompt + ".");
+        System.out.println("[!] " + prompt + ".");
     }
 
     // temporary method, потом организовать постановку дедлайна любой задачи загружаться первым
-    private void printTimeUntilDeadline() {
+    public void printTimeUntilDeadline() {
         LocalDateTime deadline = LocalDateTime.of(2026, Month.JULY, 12, 0, 0); // for test
         LocalDateTime now = LocalDateTime.now();
         Duration diff = Duration.between(now, deadline);
