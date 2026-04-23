@@ -42,7 +42,7 @@ public class HelpAction implements Action {
     }
 
     private void printAllCommand() {
-        System.out.println("Доступные команды:");
+        System.out.println("\nДоступные команды (используйте 'help [команда]' для деталей):");
         for (Action command : commands.values()) {
             System.out.println("  " +  command.getCode() + ". " + command.getAlias() + " — " + command.getShortDescription().toLowerCase() + ".");
         }
@@ -51,10 +51,7 @@ public class HelpAction implements Action {
 
     private void printSpecificCommand(String command) {
         Action specificCommand = commands.get(command);
-        try {
-            System.out.println(specificCommand.getLongDescription() + "\n");
-        } catch (NullPointerException npe) {
-            ui.printError("\rНеизвестный аргумент! Введите 'help' для списка команд");
-        }
+        if (specificCommand != null) System.out.println("\n" + specificCommand.getLongDescription() + "\n");
+        else ui.printError("Неизвестный аргумент! Введите 'help' для списка команд.");
     }
 }

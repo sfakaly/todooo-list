@@ -38,11 +38,9 @@ public class TaskController {
         Action action = commands.get(command);
 
         if (action != null) {
-            System.out.println();
             action.execute(args);
         } else {
-            ui.printError("Неизвестная команда! Введите 'help' для списка команд");
-            System.out.println();
+            ui.printError("Неизвестная команда! Введите 'help' для списка команд.");
         }
     }
 }

@@ -28,6 +28,7 @@ public class ExitAction implements Action {
     @Override
     public void execute(String args) {
         System.out.print("Завершение программы...");
+        System.out.println();
         System.exit(0);
     }
 }

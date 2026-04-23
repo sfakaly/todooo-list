@@ -4,6 +4,8 @@ import io.github.sfakaly.controller.UserInteraction;
 import io.github.sfakaly.service.TaskService;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @RequiredArgsConstructor
 public class AddAction implements Action {
     private final TaskService service;
@@ -36,9 +38,27 @@ public class AddAction implements Action {
 
     @Override
     public void execute(String args) {
+        String title = args;
+        if (args.isBlank()) {
+            System.out.println();
 
+            while (true) {
+                title = ui.readString("Введите название задачи");
+
+                if (title.isBlank()) {
+                    ui.printError("Нельзя оставлять название пустым!");
+                    continue;
+                }
+
+                break;
+            }
+        }
+        LocalDateTime createdAt = LocalDateTime.now();
+        boolean isDone = false; // при инициализации задача не может быть выполнена
+        service.addTask(title, isDone, createdAt);
+        ui.printSuccessMessage("Задача успешно была добавлена!");
+        System.out.println();
     }
-
 }
 
 

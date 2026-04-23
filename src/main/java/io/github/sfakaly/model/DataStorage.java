@@ -1,13 +1,13 @@
 package io.github.sfakaly.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class DataStorage {
     private final List<Task> tasks;
     private final int lastId;

@@ -22,7 +22,7 @@ public class UserInteraction {
                 String input = readString(prompt);
                 return Integer.parseInt(input);
             } catch (NumberFormatException nfe) {
-                printError("Ошибка! Вводить можно только целые числа");
+                printError("Ошибка! Вводить можно только целые числа.");
             }
         }
     }
@@ -37,13 +37,17 @@ public class UserInteraction {
                 case "no" -> {
                     return false;
                 }
-                default -> printError("Ошибка! Вводить можно только yes/no");
+                default -> printError("Ошибка! Вводить можно только yes/no.");
             }
         }
     }
 
     public void printError(String prompt) {
-        System.out.println("[!] " + prompt + ".");
+        System.out.println("[!] " + prompt + "\n");
+    }
+
+    public void printSuccessMessage(String prompt) {
+        System.out.println("[✓] " + prompt);
     }
 
     // temporary method, потом организовать постановку дедлайна любой задачи загружаться первым
