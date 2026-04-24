@@ -1,5 +1,6 @@
 package io.github.sfakaly.controller.commands;
 
+import io.github.sfakaly.controller.CommandRequest;
 import io.github.sfakaly.controller.UserInteraction;
 import io.github.sfakaly.service.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -37,9 +38,9 @@ public class AddAction implements Action {
     }
 
     @Override
-    public void execute(String args) {
-        String title = args;
-        if (args.isBlank()) {
+    public void execute(CommandRequest request) {
+        String title = request.getPart(0);
+        if (title.isBlank()) {
             System.out.println();
 
             while (true) {

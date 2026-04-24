@@ -1,5 +1,7 @@
 package io.github.sfakaly.controller.commands;
 
+import io.github.sfakaly.controller.CommandRequest;
+
 /**
  * AddAction - 1, add [name]
  * ListAction - 2, list
@@ -16,5 +18,5 @@ public interface Action {
     String getShortDescription();
 
 
-    public void execute(String args);
+    public void execute(CommandRequest request);
 }

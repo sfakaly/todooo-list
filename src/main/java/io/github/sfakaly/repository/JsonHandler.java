@@ -11,6 +11,8 @@ import java.nio.file.Path;
 
 public class JsonHandler {
     private final ObjectMapper mapper;
+
+    // в дальнейшем передавать путь к файлу в конструктор
     private final Path BATH_PATH = Path.of("db/json/tasks.json");
 
     public JsonHandler() {

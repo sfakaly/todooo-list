@@ -1,5 +1,6 @@
 package io.github.sfakaly.controller.commands;
 
+import io.github.sfakaly.controller.CommandRequest;
 import io.github.sfakaly.controller.UserInteraction;
 import io.github.sfakaly.service.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class UpdateAction implements Action {
     }
 
     @Override
-    public void execute(String args) {
+    public void execute(CommandRequest request) {
 
     }
 }

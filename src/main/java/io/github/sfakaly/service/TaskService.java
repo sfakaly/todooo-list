@@ -1,5 +1,6 @@
 package io.github.sfakaly.service;
 
+import io.github.sfakaly.exceptions.TaskNotFoundException;
 import io.github.sfakaly.model.Task;
 import io.github.sfakaly.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,19 @@ public class TaskService {
     }
 
     public void deleteTask(int id) {
+        findById(id);
+        boolean isRemoved = repository.deleteTaskById(id);
+        if (!isRemoved) throw new RuntimeException("Не удалось удалить задачу, хотя она существует");
+    }
 
+    public Task findById(int id) {
+        List<Task> tasks = repository.findAllTasks();
+        for (Task t : tasks) {
+            if (t.getId() == id) {
+                return t;
+            }
+        }
+
+        throw new TaskNotFoundException("Задачи с таким ID не существует.");
     }
 }

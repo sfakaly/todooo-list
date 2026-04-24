@@ -1,0 +1,32 @@
+package io.github.sfakaly.controller;
+
+import io.github.sfakaly.exceptions.InvalidCommandArgumentException;
+import lombok.RequiredArgsConstructor;
+
+public class CommandRequest {
+    private final String rawArgs;
+    private final String[] parts;
+
+    public CommandRequest(String rawArgs) {
+        this.rawArgs = rawArgs;
+        this.parts = rawArgs.isBlank() ? new String[0] : rawArgs.trim().split("\\s+");
+    }
+
+    public boolean hasArgs() {
+        return !rawArgs.isBlank();
+    }
+
+    public String getPart(int index) {
+        if (index < 0 || index >= parts.length) return "";
+        return parts[index];
+    }
+
+    public int getId() {
+        if (!hasArgs()) throw new InvalidCommandArgumentException("ID не указан.");
+        try {
+            return Integer.parseInt(rawArgs.trim());
+        } catch (NumberFormatException nfe) {
+            throw new InvalidCommandArgumentException("Ошибка! Вводить можно только целые числа.");
+        }
+    }
+}

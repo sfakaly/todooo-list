@@ -27,4 +27,11 @@ public class TaskRepository {
     public List<Task> findAllTasks() {
         return new ArrayList<>(storage.getTasks());
     }
+
+    public boolean deleteTaskById(int id) {
+        boolean removed = storage.getTasks()
+                .removeIf(t -> t.getId() == id);
+        if (removed) jsonHandler.saveStorage(storage);
+        return removed;
+    }
 }

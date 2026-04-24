@@ -1,5 +1,6 @@
 package io.github.sfakaly.controller.commands;
 
+import io.github.sfakaly.controller.CommandRequest;
 import io.github.sfakaly.controller.UserInteraction;
 import lombok.RequiredArgsConstructor;
 
@@ -36,7 +37,8 @@ public class HelpAction implements Action {
     }
 
     @Override
-    public void execute(String args) {
+    public void execute(CommandRequest request) {
+        String args = request.getPart(0);
         if (args.isBlank()) printAllCommand();
         else printSpecificCommand(args);
     }

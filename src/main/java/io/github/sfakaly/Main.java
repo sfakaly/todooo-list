@@ -1,5 +1,6 @@
 package io.github.sfakaly;
 
+import io.github.sfakaly.controller.CommandRequest;
 import io.github.sfakaly.controller.TaskController;
 import io.github.sfakaly.controller.UserInteraction;
 import io.github.sfakaly.repository.JsonHandler;

@@ -1,6 +1,8 @@
 package io.github.sfakaly.controller;
 
 import io.github.sfakaly.controller.commands.*;
+import io.github.sfakaly.exceptions.InvalidCommandArgumentException;
+import io.github.sfakaly.exceptions.TaskNotFoundException;
 import io.github.sfakaly.service.TaskService;
 
 import java.util.LinkedHashMap;
@@ -30,17 +32,21 @@ public class TaskController {
             String command = parts[0];
             String args = parts.length > 1 ? parts[1] : "";
 
-            handleCommand(command, args);
+            CommandRequest request = new CommandRequest(args);
+
+            handleCommand(command, request);
         }
     }
 
-    private void handleCommand(String command, String args) {
+    private void handleCommand(String command, CommandRequest request) {
         Action action = commands.get(command);
 
         if (action != null) {
-            action.execute(args);
-        } else {
-            ui.printError("Неизвестная команда! Введите 'help' для списка команд.");
-        }
+            try {
+                action.execute(request);
+            } catch (TaskNotFoundException | InvalidCommandArgumentException e) {
+                ui.printError(e.getMessage());
+            }
+        } else ui.printError("Неизвестная команда! Введите 'help' для списка команд.");
     }
 }

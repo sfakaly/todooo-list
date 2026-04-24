@@ -1,11 +1,12 @@
 package io.github.sfakaly.controller.commands;
 
+import io.github.sfakaly.controller.CommandRequest;
 import io.github.sfakaly.controller.UserInteraction;
 import io.github.sfakaly.model.Task;
 import io.github.sfakaly.service.TaskService;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
+import java.util.concurrent.ConcurrentMap;
 
 @RequiredArgsConstructor
 public class DeleteAction implements Action {
@@ -40,56 +41,16 @@ public class DeleteAction implements Action {
     }
 
     @Override
-    public void execute(String args) {
-        List<Task> tasks = service.getAllTasks();
-        if (tasks.isEmpty()) {
-            ui.printError("🚫 Нечего удалять: список пуст.");
-            return;
-        }
+    public void execute(CommandRequest request) {
+        int id = request.hasArgs() ? request.getId() : ui.readInt("Введите ID удаляемой задачи (либо 0 для отмены)");
+        if (id == 0) return;
 
-        int id = getInputId(args);
-        Task task = searchTaskById(tasks, id);
+        Task task = service.findById(id);
 
-        if (task == null) {
-            System.out.println();
-            return;
-        }
-
-        boolean deletionConfirm = ui.confirm("Вы действительно хотите удалить эту задачу?");
-        if (deletionConfirm) {
-            service.deleteTask(task.getId());
+        if (ui.confirm("Вы действительно хотите удалить эту задачу?")) {
+            service.deleteTask(id);
             ui.printSuccessMessage("Задача '" + task.getTitle() + "' успешно стерта.");
             System.out.println();
         } else ui.printError("Действие отменено");
-    }
-
-    private Task searchTaskById(List<Task> tasks, int id) {
-        while (true) {
-            if (isZero(id)) return null;
-            for (Task t : tasks) {
-                if (t.getId() == id) {
-                    return t;
-                }
-            }
-
-            ui.printError("Задачи с таким ID не существует");
-            id = getInputId("");
-        }
-    }
-
-    private int getInputId(String args) {
-        if (!args.isEmpty()) {
-            try {
-                return Integer.parseInt(args);
-            } catch (NumberFormatException nfe) {
-                ui.printError("Ошибка! Вводить можно только целые числа.");
-            }
-        }
-            System.out.println();
-            return ui.readInt("Введите ID удаляемой задачи (либо '0' для отмены)");
-    }
-
-    private boolean isZero(int id) {
-        return id == 0;
     }
 }
