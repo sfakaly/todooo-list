@@ -3,6 +3,7 @@ package io.github.sfakaly.repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.github.sfakaly.exceptions.JsonStorageException;
 import io.github.sfakaly.model.DataStorage;
 
 import java.io.File;
@@ -13,7 +14,7 @@ public class JsonHandler {
     private final ObjectMapper mapper;
 
     // в дальнейшем передавать путь к файлу в конструктор
-    private final Path BATH_PATH = Path.of("db/json/tasks.json");
+    private final Path BASE_PATH = Path.of("db/json/tasks.json");
 
     public JsonHandler() {
         this.mapper = new ObjectMapper()
@@ -25,14 +26,14 @@ public class JsonHandler {
     // TODO: сделать какой-нибудь класс для управления файлами, папками и тд...
     public void saveStorage(DataStorage storage) {
         try {
-            mapper.writeValue(BATH_PATH.toFile(), storage);
+            mapper.writeValue(BASE_PATH.toFile(), storage);
         } catch (IOException ioe) {
-            System.out.println("[!] Ошибка сохранения в JSON-файл! " + ioe.getMessage());
+            throw new JsonStorageException("[!] Ошибка сохранения в JSON-файл!");
         }
     }
 
     public DataStorage loadStorage() {
-        File file = BATH_PATH.toFile();
+        File file = BASE_PATH.toFile();
 
         // проверка на наличие файла
         if (!file.exists()) {
@@ -47,8 +48,7 @@ public class JsonHandler {
         try {
             return mapper.readValue(file, DataStorage.class);
         } catch (IOException ioe) {
-            System.out.println("[!] Ошибка чтения JSON-файла! " + ioe.getMessage());
-            return new DataStorage();
+            throw new JsonStorageException("[!] Ошибка чтения JSON-файла!");
         }
     }
 }

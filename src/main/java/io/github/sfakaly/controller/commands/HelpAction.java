@@ -38,7 +38,7 @@ public class HelpAction implements Action {
 
     @Override
     public void execute(CommandRequest request) {
-        String args = request.getPart(0);
+        String args = request.getPartOfArgs(0);
         if (args.isBlank()) printAllCommand();
         else printSpecificCommand(args);
     }

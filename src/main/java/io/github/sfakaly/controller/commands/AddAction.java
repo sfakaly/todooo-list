@@ -39,12 +39,17 @@ public class AddAction implements Action {
 
     @Override
     public void execute(CommandRequest request) {
-        String title = request.getPart(0);
+        String title = request.getAllArgs();
+        if (request.getPartOfArgs(0).equals("0")) {
+            System.out.println();
+            return;
+        }
+
         if (title.isBlank()) {
             System.out.println();
 
             while (true) {
-                title = ui.readString("Введите название задачи");
+                title = ui.readString("Введите название задачи (либо 0 для отмены)");
 
                 if (title.isBlank()) {
                     ui.printError("Нельзя оставлять название пустым!");
@@ -53,6 +58,11 @@ public class AddAction implements Action {
 
                 break;
             }
+        }
+
+        if (title.equals("0")) {
+            ui.printError("Действие отменено");
+            return;
         }
 
         LocalDateTime createdAt = LocalDateTime.now();

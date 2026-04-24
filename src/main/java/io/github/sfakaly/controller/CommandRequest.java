@@ -1,7 +1,6 @@
 package io.github.sfakaly.controller;
 
 import io.github.sfakaly.exceptions.InvalidCommandArgumentException;
-import lombok.RequiredArgsConstructor;
 
 public class CommandRequest {
     private final String rawArgs;
@@ -16,9 +15,13 @@ public class CommandRequest {
         return !rawArgs.isBlank();
     }
 
-    public String getPart(int index) {
+    public String getPartOfArgs(int index) {
         if (index < 0 || index >= parts.length) return "";
         return parts[index];
+    }
+
+    public String getAllArgs() {
+        return rawArgs.trim();
     }
 
     public int getId() {

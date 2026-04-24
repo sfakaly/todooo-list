@@ -43,11 +43,14 @@ public class DeleteAction implements Action {
     @Override
     public void execute(CommandRequest request) {
         int id = request.hasArgs() ? request.getId() : ui.readInt("Введите ID удаляемой задачи (либо 0 для отмены)");
-        if (id == 0) return;
+        if (id == 0) {
+            ui.printError("Действие отменено");
+            return;
+        }
 
         Task task = service.findById(id);
 
-        if (ui.confirm("Вы действительно хотите удалить эту задачу?")) {
+        if (ui.confirm("Вы действительно хотите удалить задачу '" + task.getTitle() + "'?")) {
             service.deleteTask(id);
             ui.printSuccessMessage("Задача '" + task.getTitle() + "' успешно стерта.");
             System.out.println();
