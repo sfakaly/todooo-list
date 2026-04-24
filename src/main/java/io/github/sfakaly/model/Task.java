@@ -23,4 +23,9 @@ public class Task {
     public boolean isDone() {
         return isDone;
     }
+
+    @JsonProperty("isDone")
+    public void setIsDone(boolean isDone) {
+        this.isDone = isDone;
+    }
 }

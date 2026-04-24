@@ -38,6 +38,7 @@ public class UpdateAction implements Action {
 
     @Override
     public void execute(CommandRequest request) {
+        service.isListEmpty();
         System.out.println();
 
         int id = request.hasArgs() ? request.getId() : ui.readInt("Введите ID изменяемой задачи (либо 0 для отмены)");

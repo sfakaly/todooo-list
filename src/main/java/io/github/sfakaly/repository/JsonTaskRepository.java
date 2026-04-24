@@ -48,4 +48,9 @@ public class JsonTaskRepository implements TaskRepository {
     public void updateStorage() {
         jsonHandler.saveStorage(storage);
     }
+
+    public void deleteAllTasks() {
+        storage.getTasks().clear();
+        jsonHandler.saveStorage(storage);
+    }
 }

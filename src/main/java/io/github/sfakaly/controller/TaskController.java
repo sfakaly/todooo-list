@@ -1,6 +1,7 @@
 package io.github.sfakaly.controller;
 
 import io.github.sfakaly.controller.commands.*;
+import io.github.sfakaly.exceptions.EmptyListException;
 import io.github.sfakaly.exceptions.InvalidCommandArgumentException;
 import io.github.sfakaly.exceptions.TaskNotFoundException;
 import io.github.sfakaly.service.TaskService;
@@ -44,7 +45,7 @@ public class TaskController {
         if (action != null) {
             try {
                 action.execute(request);
-            } catch (TaskNotFoundException | InvalidCommandArgumentException e) {
+            } catch (TaskNotFoundException | InvalidCommandArgumentException | EmptyListException e) {
                 ui.printError(e.getMessage());
             }
         } else ui.printError("Неизвестная команда! Введите 'help' для списка команд.");

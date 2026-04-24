@@ -13,7 +13,7 @@ public class UserInteraction {
 
     public String readString(String prompt) {
         System.out.print("> " + prompt + ": ");
-        return scanner.nextLine();
+        return scanner.nextLine().trim().toLowerCase();
     }
 
     public int readInt(String prompt) {
