@@ -8,7 +8,6 @@ import io.github.sfakaly.service.TaskService;
 
 public class Main {
     public static void main(String[] args) {
-        // JsonHandler -> TaskRepository -> TaskService -> UI -> TaskController
         JsonHandler jsonHandler = new JsonHandler();
         JsonTaskRepository repository = new JsonTaskRepository(jsonHandler);
         TaskService service = new TaskService(repository);

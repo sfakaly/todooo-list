@@ -9,4 +9,5 @@ public interface TaskRepository {
     List<Task> findAllTasks();
     void deleteTaskById(int id);
     Task findById(int id);
+    void updateStorage();
 }

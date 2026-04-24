@@ -44,4 +44,8 @@ public class JsonTaskRepository implements TaskRepository {
 
         throw new TaskNotFoundException("Задачи с таким ID не существует.");
     }
+
+    public void updateStorage() {
+        jsonHandler.saveStorage(storage);
+    }
 }

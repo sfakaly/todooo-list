@@ -29,4 +29,10 @@ public class TaskService {
     public Task findById(int id) {
         return repository.findById(id);
     }
+
+    public void updateTask(Task task, String newTitle, boolean newIsDone) {
+        if (!newTitle.isBlank()) task.setTitle(newTitle);
+        if (newIsDone) task.setDone(newIsDone);
+        repository.updateStorage();
+    }
 }
