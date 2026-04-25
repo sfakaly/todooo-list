@@ -4,14 +4,13 @@ import io.github.sfakaly.controller.CommandRequest;
 import io.github.sfakaly.controller.UserInteraction;
 import io.github.sfakaly.model.Task;
 import io.github.sfakaly.service.TaskService;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-@RequiredArgsConstructor
-public class ListAction implements Action {
-    private final TaskService service;
-    private final UserInteraction ui;
+public class ListAction extends BaseAction {
+    public ListAction(TaskService service, UserInteraction ui) {
+        super(service, ui);
+    }
 
     @Override
     public String getCode() {
@@ -38,7 +37,7 @@ public class ListAction implements Action {
     }
 
     @Override
-    public void execute(CommandRequest request) {
+    public void protectedExecute(CommandRequest request) {
         List<Task> tasks = service.getAllTasks();
         System.out.println();
 

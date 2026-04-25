@@ -2,14 +2,17 @@ package io.github.sfakaly.controller.commands;
 
 import io.github.sfakaly.controller.CommandRequest;
 import io.github.sfakaly.controller.UserInteraction;
-import lombok.RequiredArgsConstructor;
+import io.github.sfakaly.service.TaskService;
 
 import java.util.Map;
 
-@RequiredArgsConstructor
-public class HelpAction implements Action {
+public class HelpAction extends BaseAction {
     private final Map<String, Action> commands;
-    private final UserInteraction ui;
+
+    public HelpAction(TaskService service, UserInteraction ui, Map<String, Action> commands) {
+        super(service, ui);
+        this.commands = commands;
+    }
 
     @Override
     public String getCode() {
@@ -37,7 +40,7 @@ public class HelpAction implements Action {
     }
 
     @Override
-    public void execute(CommandRequest request) {
+    public void protectedExecute(CommandRequest request) {
         String args = request.getPartOfArgs(0);
         if (args.isBlank()) printAllCommand();
         else printSpecificCommand(args);

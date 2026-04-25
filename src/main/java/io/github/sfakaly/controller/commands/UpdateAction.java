@@ -4,12 +4,16 @@ import io.github.sfakaly.controller.CommandRequest;
 import io.github.sfakaly.controller.UserInteraction;
 import io.github.sfakaly.model.Task;
 import io.github.sfakaly.service.TaskService;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
-public class UpdateAction implements Action {
-    private final TaskService service;
-    private final UserInteraction ui;
+public class UpdateAction extends BaseAction {
+    public UpdateAction(TaskService service, UserInteraction ui) {
+        super(service, ui);
+    }
+
+    @Override
+    protected boolean isCancelCheckEnable() {
+        return true;
+    }
 
     @Override
     public String getCode() {
@@ -37,15 +41,11 @@ public class UpdateAction implements Action {
     }
 
     @Override
-    public void execute(CommandRequest request) {
+    public void protectedExecute(CommandRequest request) {
         service.isListEmpty();
         System.out.println();
 
         int id = request.hasArgs() ? request.getId() : ui.readInt("Введите ID изменяемой задачи (либо 0 для отмены)");
-        if (id == 0) {
-            ui.printError("Действие отменено");
-            return;
-        }
 
         Task task = service.findById(id);
         String newTitle = ui.readString("Введите новое название (либо enter для отмены)");

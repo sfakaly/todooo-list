@@ -1,5 +1,6 @@
 package io.github.sfakaly.controller;
 
+import io.github.sfakaly.exceptions.OperationCancelledException;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Duration;
@@ -13,7 +14,9 @@ public class UserInteraction {
 
     public String readString(String prompt) {
         System.out.print("> " + prompt + ": ");
-        return scanner.nextLine().trim().toLowerCase();
+        String input = scanner.nextLine().trim().toLowerCase();
+        if (input.equals("0")) throw new OperationCancelledException("Действие отменено.");
+        return input;
     }
 
     public int readInt(String prompt) {

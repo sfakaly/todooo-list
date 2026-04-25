@@ -4,12 +4,16 @@ import io.github.sfakaly.controller.CommandRequest;
 import io.github.sfakaly.controller.UserInteraction;
 import io.github.sfakaly.model.Task;
 import io.github.sfakaly.service.TaskService;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
-public class DeleteAction implements Action {
-    private final TaskService service;
-    private final UserInteraction ui;
+public class DeleteAction extends BaseAction {
+    public DeleteAction(TaskService service, UserInteraction ui) {
+        super(service, ui);
+    }
+
+    @Override
+    protected boolean isCancelCheckEnable() {
+        return true;
+    }
 
     @Override
     public String getCode() {
@@ -40,7 +44,7 @@ public class DeleteAction implements Action {
     }
 
     @Override
-    public void execute(CommandRequest request) {
+    public void protectedExecute(CommandRequest request) {
         service.isListEmpty();
 
         int id;
@@ -48,11 +52,6 @@ public class DeleteAction implements Action {
             deleteList();
             return;
         } else id = request.hasArgs() ? request.getId() : ui.readInt("Введите ID удаляемой задачи (либо 0 для отмены)");
-
-        if (id == 0) {
-            ui.printError("Действие отменено");
-            return;
-        }
 
         Task task = service.findById(id);
 

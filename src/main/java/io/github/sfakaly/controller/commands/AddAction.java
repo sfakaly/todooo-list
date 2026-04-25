@@ -3,14 +3,18 @@ package io.github.sfakaly.controller.commands;
 import io.github.sfakaly.controller.CommandRequest;
 import io.github.sfakaly.controller.UserInteraction;
 import io.github.sfakaly.service.TaskService;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@RequiredArgsConstructor
-public class AddAction implements Action {
-    private final TaskService service;
-    private final UserInteraction ui;
+public class AddAction extends BaseAction {
+    public AddAction(TaskService service, UserInteraction ui) {
+        super(service, ui);
+    }
+
+    @Override
+    protected boolean isCancelCheckEnable() {
+        return true;
+    }
 
     @Override
     public String getCode() {
@@ -38,12 +42,8 @@ public class AddAction implements Action {
     }
 
     @Override
-    public void execute(CommandRequest request) {
+    public void protectedExecute(CommandRequest request) {
         String title = request.getAllArgs();
-        if (request.getPartOfArgs(0).equals("0")) {
-            System.out.println();
-            return;
-        }
 
         if (title.isBlank()) {
             System.out.println();
@@ -58,11 +58,6 @@ public class AddAction implements Action {
 
                 break;
             }
-        }
-
-        if (title.equals("0")) {
-            ui.printError("Действие отменено");
-            return;
         }
 
         LocalDateTime createdAt = LocalDateTime.now();

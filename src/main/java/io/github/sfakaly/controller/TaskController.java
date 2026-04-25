@@ -1,6 +1,7 @@
 package io.github.sfakaly.controller;
 
 import io.github.sfakaly.controller.commands.*;
+import io.github.sfakaly.exceptions.OperationCancelledException;
 import io.github.sfakaly.exceptions.EmptyListException;
 import io.github.sfakaly.exceptions.InvalidCommandArgumentException;
 import io.github.sfakaly.exceptions.TaskNotFoundException;
@@ -19,14 +20,15 @@ public class TaskController {
         commands.put("list", new ListAction(service, ui));
         commands.put("update", new UpdateAction(service, ui));
         commands.put("delete", new DeleteAction(service, ui));
-        commands.put("help", new HelpAction(commands, ui));
-        commands.put("exit", new ExitAction());
+        commands.put("help", new HelpAction(service, ui, commands));
+        commands.put("exit", new ExitAction(service, ui));
     }
 
     public void run() {
         ui.printTimeUntilDeadline();
+        boolean isRunning = true;
 
-        while (true) {
+        while (isRunning) {
             String choice = ui.readString("Введите команду");
 
             String[] parts = choice.split("\\s+", 2);
@@ -45,7 +47,10 @@ public class TaskController {
         if (action != null) {
             try {
                 action.execute(request);
-            } catch (TaskNotFoundException | InvalidCommandArgumentException | EmptyListException e) {
+            } catch (TaskNotFoundException
+                     | InvalidCommandArgumentException
+                     | EmptyListException
+                     | OperationCancelledException e) {
                 ui.printError(e.getMessage());
             }
         } else ui.printError("Неизвестная команда! Введите 'help' для списка команд.");
