@@ -1,6 +1,7 @@
 package io.github.sfakaly.controller;
 
 import io.github.sfakaly.controller.commands.*;
+import io.github.sfakaly.controller.commands.impl.*;
 import io.github.sfakaly.exceptions.OperationCancelledException;
 import io.github.sfakaly.exceptions.EmptyListException;
 import io.github.sfakaly.exceptions.InvalidCommandArgumentException;
@@ -29,15 +30,19 @@ public class TaskController {
         boolean isRunning = true;
 
         while (isRunning) {
-            String choice = ui.readString("Введите команду");
+            try {
+                String choice = ui.readString("Введите команду");
 
-            String[] parts = choice.split("\\s+", 2);
-            String command = parts[0];
-            String args = parts.length > 1 ? parts[1] : "";
+                String[] parts = choice.split("\\s+", 2);
+                String command = parts[0];
+                String args = parts.length > 1 ? parts[1] : "";
 
-            CommandRequest request = new CommandRequest(args);
+                CommandRequest request = new CommandRequest(args);
 
-            handleCommand(command, request);
+                handleCommand(command, request);
+            } catch (OperationCancelledException oce) {
+                ui.printError(oce.getMessage());
+            }
         }
     }
 

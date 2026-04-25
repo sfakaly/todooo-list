@@ -1,7 +1,8 @@
-package io.github.sfakaly.controller.commands;
+package io.github.sfakaly.controller.commands.impl;
 
 import io.github.sfakaly.controller.CommandRequest;
 import io.github.sfakaly.controller.UserInteraction;
+import io.github.sfakaly.controller.commands.BaseAction;
 import io.github.sfakaly.model.Task;
 import io.github.sfakaly.service.TaskService;
 
@@ -39,18 +40,12 @@ public class ListAction extends BaseAction {
     @Override
     public void protectedExecute(CommandRequest request) {
         List<Task> tasks = service.getAllTasks();
+        service.isListEmpty();
         System.out.println();
+        printList(tasks);
+    }
 
-        if (tasks.isEmpty()) {
-            String output = """
-                    🏖️ Кажется, всё чисто!
-                       На данный момент у вас нет задач.
-                    """;
-
-            System.out.println(output);
-            return;
-        }
-
+    private void printList(List<Task> tasks) {
         System.out.println("📂 TASKS");
 
         for (int i = 0; i < tasks.size(); i++) {

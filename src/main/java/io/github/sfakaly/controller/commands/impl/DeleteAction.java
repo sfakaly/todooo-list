@@ -1,7 +1,8 @@
-package io.github.sfakaly.controller.commands;
+package io.github.sfakaly.controller.commands.impl;
 
 import io.github.sfakaly.controller.CommandRequest;
 import io.github.sfakaly.controller.UserInteraction;
+import io.github.sfakaly.controller.commands.BaseAction;
 import io.github.sfakaly.model.Task;
 import io.github.sfakaly.service.TaskService;
 
@@ -47,29 +48,31 @@ public class DeleteAction extends BaseAction {
     public void protectedExecute(CommandRequest request) {
         service.isListEmpty();
 
-        int id;
-        if (request.getPartOfArgs(0).equals("list")) {
+        if ("list".equals(request.getPartOfArgs(0))) {
             deleteList();
             return;
-        } else id = request.hasArgs() ? request.getId() : ui.readInt("Введите ID удаляемой задачи (либо 0 для отмены)");
+        }
+
+        int id = request.hasArgs() ? request.getId() : ui.readInt("Введите ID удаляемой задачи (либо 0 для отмены)");
 
         Task task = service.findById(id);
 
-        if (ui.confirm("Вы действительно хотите удалить задачу '" + task.getTitle() + "'?")) {
-            service.deleteTask(id);
-            ui.printSuccessMessage("Задача '" + task.getTitle() + "' успешно стерта.");
-            System.out.println();
-        } else ui.printError("Действие отменено");
+        if (!ui.confirm("Вы действительно хотите удалить задачу '" + task.getTitle() + "'?")) {
+            ui.printError("Удаление задачи отменено.");
+            return;
+        }
+
+        service.deleteTask(id);
+        ui.printSuccessMessage("Задача '" + task.getTitle() + "' успешно стерта.");
+        System.out.println();
     }
 
-    // Проверка на ввод от пользователя слова list, и в случае ввода удаление всего списка
     private void deleteList() {
         if (ui.confirm("Вы действительно хотите удалить весь список задач?")) {
             service.deleteAllTasks();
-            ui.printSuccessMessage("Список задач успешно стёрт.");
+            ui.printSuccessMessage("Список задач успешно очищен.");
         } else {
-            ui.printError("Действие отменено");
+            ui.printError("Очистка списка отменена.");
         }
-        System.out.println();
     }
 }

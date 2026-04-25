@@ -1,7 +1,8 @@
-package io.github.sfakaly.controller.commands;
+package io.github.sfakaly.controller.commands.impl;
 
 import io.github.sfakaly.controller.CommandRequest;
 import io.github.sfakaly.controller.UserInteraction;
+import io.github.sfakaly.controller.commands.BaseAction;
 import io.github.sfakaly.service.TaskService;
 
 import java.time.LocalDateTime;
@@ -43,22 +44,9 @@ public class AddAction extends BaseAction {
 
     @Override
     public void protectedExecute(CommandRequest request) {
-        String title = request.getAllArgs();
-
-        if (title.isBlank()) {
-            System.out.println();
-
-            while (true) {
-                title = ui.readString("Введите название задачи (либо 0 для отмены)");
-
-                if (title.isBlank()) {
-                    ui.printError("Нельзя оставлять название пустым!");
-                    continue;
-                }
-
-                break;
-            }
-        }
+        String title = request.getAllArgs().isBlank()
+                ? ui.readNotEmptyString("Введите название задачи (либо 0 для отмены)")
+                : request.getAllArgs();
 
         LocalDateTime createdAt = LocalDateTime.now();
         boolean isDone = false; // при инициализации задача не может быть выполнена

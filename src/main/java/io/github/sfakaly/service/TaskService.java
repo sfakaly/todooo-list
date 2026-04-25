@@ -43,7 +43,7 @@ public class TaskService {
 
     public void isListEmpty() {
         if (getAllTasks().isEmpty()) {
-            throw new EmptyListException("Список задач пуст!");
+            throw new EmptyListException("На данный момент у вас нет задач.");
         }
     }
 }

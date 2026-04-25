@@ -17,5 +17,5 @@ public interface Action {
     String getLongDescription();
     String getShortDescription();
 
-    public void execute(CommandRequest request);
+    void execute(CommandRequest request);
 }

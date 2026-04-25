@@ -1,7 +1,8 @@
-package io.github.sfakaly.controller.commands;
+package io.github.sfakaly.controller.commands.impl;
 
 import io.github.sfakaly.controller.CommandRequest;
 import io.github.sfakaly.controller.UserInteraction;
+import io.github.sfakaly.controller.commands.BaseAction;
 import io.github.sfakaly.model.Task;
 import io.github.sfakaly.service.TaskService;
 

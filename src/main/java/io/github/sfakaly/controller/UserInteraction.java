@@ -76,4 +76,12 @@ public class UserInteraction {
 
         System.out.println(output + "\n");
     }
+
+    public String readNotEmptyString(String prompt) {
+        while (true) {
+            String input = readString(prompt);
+            if (!input.isBlank()) return input;
+            printError("Поле не может быть пустым!");
+        }
+    }
 }
