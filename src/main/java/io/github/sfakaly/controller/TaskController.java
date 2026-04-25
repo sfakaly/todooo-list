@@ -27,9 +27,8 @@ public class TaskController {
 
     public void run() {
         ui.printTimeUntilDeadline();
-        boolean isRunning = true;
 
-        while (isRunning) {
+        while (true) {
             try {
                 String choice = ui.readString("Введите команду");
 

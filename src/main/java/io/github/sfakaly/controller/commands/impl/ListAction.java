@@ -51,7 +51,7 @@ public class ListAction extends BaseAction {
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
             String prefix = (i == tasks.size() - 1) ? "└──" : "├──";
-            String isDonePrefix = task.isDone() ? "✅" : "⏳";
+            String isDonePrefix = task.isCompleted() ? "✅" : "⏳";
 
             String taskInfo = String.format("%s [ID: %d] %s %s",
                     prefix,

@@ -2,7 +2,6 @@ package io.github.sfakaly.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,21 +10,24 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Task {
     private int id;
     private String title;
-    private LocalDateTime createdAt;
-    private boolean isDone;
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private boolean isCompleted = false;
 
-    @JsonProperty("isDone")
-    public boolean isDone() {
-        return isDone;
+    public Task (String title) {
+        this.title = title;
     }
 
-    @JsonProperty("isDone")
-    public void setIsDone(boolean isDone) {
-        this.isDone = isDone;
+    @JsonProperty("isCompleted")
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    @JsonProperty("setCompleted")
+    public void setCompleted(boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }
