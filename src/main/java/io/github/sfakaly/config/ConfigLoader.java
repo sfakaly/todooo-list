@@ -1,6 +1,6 @@
 package io.github.sfakaly.config;
 
-import com.sun.tools.javac.Main;
+import io.github.sfakaly.Main;
 
 import java.io.IOException;
 import java.io.InputStream;

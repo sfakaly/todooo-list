@@ -1,13 +1,17 @@
 package io.github.sfakaly.controller.commands.impl;
 
 import io.github.sfakaly.controller.CommandRequest;
+import io.github.sfakaly.controller.TaskController;
 import io.github.sfakaly.controller.UserInteraction;
 import io.github.sfakaly.controller.commands.BaseAction;
 import io.github.sfakaly.service.TaskService;
 
 public class ExitAction extends BaseAction {
-    public ExitAction(TaskService service, UserInteraction ui) {
+    private final TaskController controller;
+
+    public ExitAction(TaskService service, UserInteraction ui, TaskController controller) {
         super(service, ui);
+        this.controller = controller;
     }
 
     @Override
@@ -38,6 +42,6 @@ public class ExitAction extends BaseAction {
     public void protectedExecute(CommandRequest request) {
         System.out.print("Завершение программы...");
         System.out.println();
-        System.exit(0);
+        controller.stop();
     }
 }

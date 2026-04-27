@@ -14,6 +14,7 @@ import java.util.Map;
 public class TaskController {
     private final Map<String, Action> commands = new LinkedHashMap<>();
     private final UserInteraction ui;
+    private boolean isRunning = true;
 
     public TaskController(TaskService service, UserInteraction ui) {
         this.ui = ui;
@@ -22,12 +23,11 @@ public class TaskController {
         commands.put("update", new UpdateAction(service, ui));
         commands.put("delete", new DeleteAction(service, ui));
         commands.put("help", new HelpAction(service, ui, commands));
-        commands.put("exit", new ExitAction(service, ui));
+        commands.put("exit", new ExitAction(service, ui, this));
     }
 
     public void run() {
         ui.printTimeUntilDeadline();
-        boolean isRunning = true;
 
         while (isRunning) {
             try {
@@ -59,5 +59,9 @@ public class TaskController {
                 ui.printError(e.getMessage());
             }
         } else ui.printError("Неизвестная команда! Введите 'help' для списка команд.");
+    }
+
+    public void stop() {
+        this.isRunning = false;
     }
 }

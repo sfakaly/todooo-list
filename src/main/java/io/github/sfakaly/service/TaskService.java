@@ -23,7 +23,6 @@ public class TaskService {
     }
 
     public void deleteTask(int id) {
-        repository.findById(id);
         repository.deleteTaskById(id);
     }
 

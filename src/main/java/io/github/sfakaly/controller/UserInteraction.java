@@ -55,20 +55,20 @@ public class UserInteraction {
 
     // temporary method, потом организовать постановку дедлайна любой задачи загружаться первым
     public void printTimeUntilDeadline() {
-        LocalDateTime deadline = LocalDateTime.of(2026, Month.JULY, 12, 0, 0); // for test
+        LocalDateTime deadline = LocalDateTime.of(2026, Month.MAY, 16, 11, 0); // for test
         LocalDateTime now = LocalDateTime.now();
         Duration diff = Duration.between(now, deadline);
 
         if (diff.isZero() || diff.isNegative()) {
             System.out.println("⌛️ Обратный отсчет был приостановлен...");
-            String output = String.format("Событие '%s' наступило!", "Летние каникулы"); // "Летние каникулы" for test
+            String output = String.format("Событие '%s' наступило!", "Соревнования по муай-тай"); // "Соревнования по муай-тай" for test
             System.out.println(output + "\n");
             return;
         }
 
         System.out.println("⏳ Обратный отсчет запущен...");
         String output = String.format("До события '%s' осталось: %d дн. %02d:%02d:%02d",
-                "Летние каникулы", // for test
+                "Соревнования по муай-тай", // for test
                 diff.toDaysPart(),
                 diff.toHoursPart(),
                 diff.toMinutesPart(),
