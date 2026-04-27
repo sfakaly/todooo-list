@@ -11,44 +11,39 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class JsonHandler {
+    private final Path basePath;
     private final ObjectMapper mapper;
 
-    // в дальнейшем передавать путь к файлу в конструктор
-    private final Path BASE_PATH = Path.of("db/json/tasks.json");
+    public JsonHandler(String path) {
+        this.basePath = Path.of(path);
 
-    public JsonHandler() {
         this.mapper = new ObjectMapper()
                 .registerModule(new JavaTimeModule())
                 .enable(SerializationFeature.INDENT_OUTPUT)
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
-    // TODO: сделать какой-нибудь класс для управления файлами, папками и тд...
     public void saveStorage(DataStorage storage) {
         try {
-            mapper.writeValue(BASE_PATH.toFile(), storage);
+            mapper.writeValue(basePath.toFile(), storage);
         } catch (IOException ioe) {
-            throw new JsonStorageException("[!] Ошибка сохранения в JSON-файл!");
+            throw new JsonStorageException("Ошибка сохранения в JSON-файл!");
         }
     }
 
     public DataStorage loadStorage() {
-        File file = BASE_PATH.toFile();
+        File file = basePath.toFile();
 
         // проверка на наличие файла
-        if (!file.exists()) {
-            return new DataStorage();
-        }
+        if (!file.exists()) return new DataStorage();
 
         // проверка на пустой файл
-        if (file.length() == 0) {
-            return new DataStorage();
-        }
+        if (file.length() == 0) return new DataStorage();
 
         try {
             return mapper.readValue(file, DataStorage.class);
         } catch (IOException ioe) {
-            throw new JsonStorageException("[!] Ошибка чтения JSON-файла!");
+            throw new JsonStorageException("Ошибка чтения JSON-файла!");
         }
     }
 }
