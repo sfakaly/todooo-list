@@ -16,6 +16,7 @@ public class JsonHandler {
 
     public JsonHandler(String path) {
         this.basePath = Path.of(path);
+        DirectoryManager.ensureDirectoryExists(path);
 
         this.mapper = new ObjectMapper()
                 .registerModule(new JavaTimeModule())
