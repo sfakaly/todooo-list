@@ -50,6 +50,7 @@ public class DeleteAction extends BaseAction {
 
         if ("list".equals(request.getPartOfArgs(0))) {
             deleteList();
+            System.out.println();
             return;
         }
 

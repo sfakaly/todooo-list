@@ -29,7 +29,7 @@ public class TaskController {
     public void run() {
         ui.printTimeUntilDeadline();
 
-        while (isRunning) {
+        while (true) {
             try {
                 String choice = ui.readString("Введите команду");
 

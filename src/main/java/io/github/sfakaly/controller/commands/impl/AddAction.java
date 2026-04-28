@@ -48,9 +48,7 @@ public class AddAction extends BaseAction {
                 ? ui.readNotEmptyString("Введите название задачи (либо 0 для отмены)")
                 : request.getAllArgs();
 
-        LocalDateTime createdAt = LocalDateTime.now();
-        boolean isDone = false; // при инициализации задача не может быть выполнена
-        service.addTask(title, isDone, createdAt);
+        service.addTask(title);
         ui.printSuccessMessage("Задача успешно была добавлена!");
         System.out.println();
     }

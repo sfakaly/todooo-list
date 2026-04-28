@@ -42,7 +42,7 @@ public class JsonTaskRepository implements TaskRepository {
             }
         }
 
-        throw new TaskNotFoundException("Задачи с таким ID не существует.");
+        throw new TaskNotFoundException("Задачи с ID " + id + " не существует.");
     }
 
     public void updateStorage() {
